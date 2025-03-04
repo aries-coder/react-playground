@@ -1,24 +1,30 @@
-import { memo } from 'react'
+import { memo, useContext } from 'react'
 import FileNameList from './FileNameList'
-import Editor, { IEditorFileType } from './Editor'
+import Editor from './Editor'
+import { PlaygroundContext } from '@/ReactPlayground/PlaygroundContext'
+import { debounce } from 'lodash-es'
 
 const CodeEditor = memo(() => {
-  const file: IEditorFileType = {
-    name: 'index.tsx',
-    value: `import { memo } from 'react'`,
-    language: 'typescript'
-  }
+  const { files, selectedFileName, setFiles } =
+    useContext(PlaygroundContext)
+
+  const file = files[selectedFileName]
 
   const onChange = (
     value: string | undefined
   ) => {
-    console.log(value)
+    files[file.name].value = value!
+    setFiles({ ...files })
   }
+  console.log(file)
 
   return (
-    <div className="h-full bg-amber-200">
+    <div className="h-ful">
       <FileNameList />
-      <Editor file={file} onChange={onChange} />
+      <Editor
+        file={file}
+        onChange={debounce(onChange, 500)}
+      />
     </div>
   )
 })

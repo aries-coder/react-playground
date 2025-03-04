@@ -7,12 +7,14 @@ import {
   PlaygroundContext
 } from './PlaygroundContext'
 import { fileName2Language } from '@/utils'
+import { initFiles } from './files'
 
 export default function PlaygroundProvider(
   props: PropsWithChildren
 ) {
   const { children } = props
-  const [files, setFiles] = useState<Files>({})
+  const [files, setFiles] =
+    useState<Files>(initFiles)
   const [selectedFileName, setSelectedFileName] =
     useState('App.tsx')
 
