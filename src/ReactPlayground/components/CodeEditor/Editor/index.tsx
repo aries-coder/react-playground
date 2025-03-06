@@ -20,6 +20,7 @@ export default function Editor(
   props: IEditorPropsType
 ) {
   const { file, onChange, options } = props
+  console.log(file)
 
   const handleEditorMount: OnMount = (
     editor,
@@ -29,7 +30,8 @@ export default function Editor(
       {
         jsx: monaco.languages.typescript.JsxEmit
           .Preserve,
-        esModuleInterop: true
+        esModuleInterop: true,
+        allowImportingTsExtensions: true
       }
     )
 

@@ -7,7 +7,6 @@ import { debounce } from 'lodash-es'
 const CodeEditor = memo(() => {
   const { files, selectedFileName, setFiles } =
     useContext(PlaygroundContext)
-
   const file = files[selectedFileName]
 
   const onChange = (
