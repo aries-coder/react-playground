@@ -7,6 +7,14 @@ import { PlaygroundContext } from '@/ReactPlayground/PlaygroundContext'
 import { compile } from './compiler'
 import iframeRaw from './iframe.html?raw'
 import { IMPORT_MAP_FILE_NAME } from '@/ReactPlayground/files'
+import Message from './Message'
+
+interface MessageData {
+  data: {
+    type: 'error' | 'warn'
+    content: string
+  }
+}
 
 export default function Preview() {
   const { files } = useContext(PlaygroundContext)
@@ -15,11 +23,34 @@ export default function Preview() {
   const [iframeUrl, setIframeUrl] = useState('')
   const importMapFileValue =
     files[IMPORT_MAP_FILE_NAME].value
+  const [msgInfo, setMsgInfo] = useState<
+    MessageData['data']
+  >({
+    type: 'error',
+    content: ''
+  })
+
+  const handleMessage = (msg: MessageData) => {
+    setMsgInfo(msg.data)
+  }
 
   useEffect(() => {
     const res = compile(files)!
     setCompiledCode(res)
   }, [files])
+
+  useEffect(() => {
+    window.addEventListener(
+      'message',
+      handleMessage
+    )
+    return () => {
+      window.removeEventListener(
+        'message',
+        handleMessage
+      )
+    }
+  }, [])
 
   useEffect(() => {
     function getIframeUrl() {
@@ -42,13 +73,15 @@ export default function Preview() {
   }, [importMapFileValue, compiledCode])
 
   return (
-    <div className="h-full">
+    <div className="h-full relative">
       {iframeUrl && (
         <iframe
           className="w-full h-full"
           src={iframeUrl}
         ></iframe>
       )}
+      11
+      <Message {...msgInfo} />
     </div>
   )
 }

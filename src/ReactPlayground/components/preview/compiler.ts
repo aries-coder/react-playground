@@ -94,11 +94,11 @@ export const babelTransform = (
       plugins: [customResolver(files)],
       retainLines: true
     }).code!
-
-    return result
   } catch (error) {
-    console.error(error)
+    console.error('编译出错', error)
   }
+
+  return result
 }
 
 function customResolver(files: Files): PluginObj {

@@ -5,8 +5,12 @@ import { PlaygroundContext } from '@/ReactPlayground/PlaygroundContext'
 import { debounce } from 'lodash-es'
 
 const CodeEditor = memo(() => {
-  const { files, selectedFileName, setFiles } =
-    useContext(PlaygroundContext)
+  const {
+    files,
+    selectedFileName,
+    theme,
+    setFiles
+  } = useContext(PlaygroundContext)
   const file = files[selectedFileName]
 
   const onChange = (
@@ -22,6 +26,7 @@ const CodeEditor = memo(() => {
       <FileNameList />
       <Editor
         file={file}
+        theme={theme}
         onChange={debounce(onChange, 500)}
       />
     </div>

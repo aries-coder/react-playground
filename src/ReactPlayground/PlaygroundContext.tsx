@@ -11,8 +11,10 @@ export interface Files {
 }
 
 export interface IPlaygroundContextType {
+  theme: 'light' | 'dark'
   files: Files
   selectedFileName: string
+  setTheme: (theme: 'light' | 'dark') => void
   setSelectedFileName: (name: string) => void
   addFile: (fileName: string) => void
   removeFile: (fileName: string) => void

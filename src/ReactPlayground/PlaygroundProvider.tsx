@@ -1,5 +1,6 @@
 import {
   PropsWithChildren,
+  useEffect,
   useState
 } from 'react'
 import {
@@ -17,6 +18,9 @@ export default function PlaygroundProvider(
     useState<Files>(initFiles)
   const [selectedFileName, setSelectedFileName] =
     useState('App.tsx')
+  const [theme, setTheme] = useState<
+    'light' | 'dark'
+  >('light')
 
   const addFile = (fileName: string) => {
     files[fileName] = {
@@ -57,11 +61,17 @@ export default function PlaygroundProvider(
     })
   }
 
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+  }, [theme])
+
   return (
     <PlaygroundContext.Provider
       value={{
+        theme,
         files,
         setFiles,
+        setTheme,
         selectedFileName,
         setSelectedFileName,
         addFile,

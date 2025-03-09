@@ -1,13 +1,29 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 ::-webkit-scrollbar {
-  height: 1px;
+  height: 5px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #ddd;
+  background-color: #f0f0f0;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #ddd;
+  background-color: #888;
+  border-radius: 10px;
 }
+
+html[data-theme='light'] {
+  --bg-color: #fff;
+  --text-color: #333;
+  --border-color: #ccc;
+}
+
+html[data-theme='dark'] {
+  --bg-color: #1e1e1e;
+  --text-color: #fff;
+  --border-color: #fff;
+}
+

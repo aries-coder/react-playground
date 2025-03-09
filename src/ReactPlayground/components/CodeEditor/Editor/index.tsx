@@ -12,6 +12,7 @@ export interface IEditorFileType {
 
 export interface IEditorPropsType {
   file: IEditorFileType
+  theme: 'light' | 'dark'
   onChange?: EditorProps['onChange']
   options?: EditorProps['options']
 }
@@ -19,7 +20,7 @@ export interface IEditorPropsType {
 export default function Editor(
   props: IEditorPropsType
 ) {
-  const { file, onChange, options } = props
+  const { file, onChange, options, theme } = props
   console.log(file)
 
   const handleEditorMount: OnMount = (
@@ -54,9 +55,11 @@ export default function Editor(
   return (
     <div className="h-[calc(100vh-32px)]">
       <MonacoEditor
+        theme={
+          theme === 'dark' ? 'vs-dark' : theme
+        }
         defaultLanguage="typescript"
         language={file.language}
-        theme="vs-dark"
         value={file.value}
         path={file.name}
         onMount={handleEditorMount}

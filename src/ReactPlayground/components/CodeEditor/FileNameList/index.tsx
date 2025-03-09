@@ -55,7 +55,7 @@ export default function FileNameList() {
   }, [files])
 
   return (
-    <div className="h-8 flex items-center overflow-auto">
+    <div className="h-8 flex items-center overflow-auto bg-[var(--bg-color)] border-b border-[var(--border-color)]">
       {tabs.map((tab, index) => {
         return (
           <FileNameListItem

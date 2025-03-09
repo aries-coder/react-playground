@@ -51,7 +51,7 @@ const FileNameListItem = memo(
 
     return (
       <div
-        className={`mx-2 cursor-pointer text-nowrap ${actived ? 'text-blue-500 border-b-2' : 'text-gray-700'}`}
+        className={`mx-2 cursor-pointer text-nowrap ${actived ? 'text-blue-500 border-b-2' : 'text-[var(--text-color)]'}`}
         onClick={onClick}
       >
         {editing ?
