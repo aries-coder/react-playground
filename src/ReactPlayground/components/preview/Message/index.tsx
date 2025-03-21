@@ -11,12 +11,7 @@ const Message = memo((props: IMessageProps) => {
 
   useEffect(() => {
     setVisible(!!content)
-    console.log(content)
   }, [content])
-
-  useEffect(() => {
-    console.log(visible)
-  }, [visible])
 
   return visible ?
       <div

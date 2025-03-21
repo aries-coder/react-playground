@@ -46,6 +46,7 @@ export default function PlaygroundProvider(
       newFieldName === null
     )
       return
+
     const { [oldFieldName]: value, ...rest } =
       files
     const newFile = {

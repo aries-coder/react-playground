@@ -3,6 +3,7 @@ import MonacoEditor, {
   EditorProps
 } from '@monaco-editor/react'
 import { createATA } from './ata'
+import { convertTsconfigToMonaco } from '@/utils'
 
 export interface IEditorFileType {
   name: string
@@ -15,12 +16,19 @@ export interface IEditorPropsType {
   theme: 'light' | 'dark'
   onChange?: EditorProps['onChange']
   options?: EditorProps['options']
+  tsconfigRaw: string
 }
 
 export default function Editor(
   props: IEditorPropsType
 ) {
-  const { file, onChange, options, theme } = props
+  const {
+    file,
+    onChange,
+    options,
+    theme,
+    tsconfigRaw
+  } = props
 
   const handleEditorMount: OnMount = (
     editor,
@@ -28,10 +36,10 @@ export default function Editor(
   ) => {
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions(
       {
-        jsx: monaco.languages.typescript.JsxEmit
-          .Preserve,
-        esModuleInterop: true,
-        allowImportingTsExtensions: true
+        ...convertTsconfigToMonaco(
+          monaco,
+          tsconfigRaw
+        )
       }
     )
 
@@ -43,6 +51,8 @@ export default function Editor(
     })
 
     editor.onDidChangeModelContent(() => {
+      console.log(editor.getValue())
+
       ata(editor.getValue())
     })
 

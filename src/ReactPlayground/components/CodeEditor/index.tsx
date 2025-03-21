@@ -3,6 +3,7 @@ import FileNameList from './FileNameList'
 import Editor from './Editor'
 import { PlaygroundContext } from '@/ReactPlayground/PlaygroundContext'
 import { debounce } from 'lodash-es'
+import { TS_CONFIG_NAME } from '@/ReactPlayground/files'
 
 const CodeEditor = memo(() => {
   const {
@@ -28,6 +29,7 @@ const CodeEditor = memo(() => {
         file={file}
         theme={theme}
         onChange={debounce(onChange, 500)}
+        tsconfigRaw={files[TS_CONFIG_NAME].value}
       />
     </div>
   )

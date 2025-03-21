@@ -1,4 +1,5 @@
 import {
+  KeyboardEvent,
   memo,
   MouseEventHandler,
   useEffect,
@@ -43,11 +44,23 @@ const FileNameListItem = memo(
     const handleOnBlur = () => {
       setEditing(false)
       onEditComplate?.(name)
+      setName(value)
+    }
+    const handleOnKeyDown = (
+      e: KeyboardEvent<HTMLInputElement>
+    ) => {
+      if (e.key === 'Enter') {
+        inputRef.current?.blur()
+      }
     }
 
     useEffect(() => {
       inputRef.current?.focus()
     }, [creating])
+
+    useEffect(() => {
+      console.log(111)
+    }, [])
 
     return (
       <div
@@ -63,6 +76,7 @@ const FileNameListItem = memo(
             onChange={e =>
               setName(e.target.value)
             }
+            onKeyDown={handleOnKeyDown}
             className="bg-gray-100 outline-0"
           />
         : <>
@@ -74,7 +88,7 @@ const FileNameListItem = memo(
               }
               className="select-none"
             >
-              {name}
+              {value}
             </span>
             {!readonly && (
               <span
