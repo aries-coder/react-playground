@@ -21,7 +21,6 @@ export default function Editor(
   props: IEditorPropsType
 ) {
   const { file, onChange, options, theme } = props
-  console.log(file)
 
   const handleEditorMount: OnMount = (
     editor,
@@ -37,8 +36,6 @@ export default function Editor(
     )
 
     const ata = createATA((code, path) => {
-      console.log(`file:${path}`)
-
       monaco.languages.typescript.typescriptDefaults.addExtraLib(
         code,
         `file://${path}`
@@ -55,10 +52,10 @@ export default function Editor(
   return (
     <div className="h-[calc(100vh-32px)]">
       <MonacoEditor
+        key={file.name}
         theme={
           theme === 'dark' ? 'vs-dark' : theme
         }
-        defaultLanguage="typescript"
         language={file.language}
         value={file.value}
         path={file.name}

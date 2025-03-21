@@ -10,11 +10,7 @@ export function fileName2Language(
     case 'js':
     case 'jsx':
       return 'javascript'
-    case 'css':
-      return 'css'
-    case 'html':
-      return 'html'
     default:
-      return ''
+      return suffix
   }
 }
