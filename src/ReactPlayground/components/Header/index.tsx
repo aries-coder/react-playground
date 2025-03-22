@@ -1,13 +1,17 @@
 import Logo from '@/assets/images/react.svg'
 import { PlaygroundContext } from '@/ReactPlayground/PlaygroundContext'
+import { downloadFiles } from '@/utils/downloadFiles'
 import {
   SunOutlined,
-  MoonOutlined
+  MoonOutlined,
+  BranchesOutlined,
+  DownloadOutlined
 } from '@ant-design/icons'
+import { message } from 'antd'
 import { useContext } from 'react'
 
 export default function Header() {
-  const { theme, setTheme } = useContext(
+  const { theme, setTheme, files } = useContext(
     PlaygroundContext
   )
 
@@ -19,7 +23,7 @@ export default function Header() {
           React Playground
         </span>
       </div>
-      <div className="text-3xl">
+      <div className="text-3xl space-x-3">
         <span
           className="cursor-pointer"
           onClick={() =>
@@ -31,6 +35,29 @@ export default function Header() {
           {theme === 'light' ?
             <MoonOutlined />
           : <SunOutlined />}
+        </span>
+        <span
+          className="cursor-pointer"
+          onClick={async () => {
+            try {
+              await navigator.clipboard.writeText(
+                window.location.href
+              )
+              message.success('分享链接复制成功')
+            } catch {
+              message.success('分享链接复制失败')
+            }
+          }}
+        >
+          <BranchesOutlined />
+        </span>
+        <span
+          onClick={async () => {
+            await downloadFiles(files)
+            message.success('下载完成')
+          }}
+        >
+          <DownloadOutlined />
         </span>
       </div>
     </div>

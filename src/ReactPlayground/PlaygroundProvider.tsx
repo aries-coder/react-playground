@@ -7,15 +7,33 @@ import {
   Files,
   PlaygroundContext
 } from './PlaygroundContext'
-import { fileName2Language } from '@/utils'
+import {
+  compress,
+  fileName2Language,
+  uncompress
+} from '@/utils'
 import { initFiles } from './files'
+
+const getFilesFromUrl = () => {
+  let files: Files | undefined
+  try {
+    const hash = uncompress(
+      window.location.hash.slice(1)
+    )
+    files = JSON.parse(hash)
+  } catch (error) {
+    console.error(error)
+  }
+  return files
+}
 
 export default function PlaygroundProvider(
   props: PropsWithChildren
 ) {
   const { children } = props
-  const [files, setFiles] =
-    useState<Files>(initFiles)
+  const [files, setFiles] = useState<Files>(
+    getFilesFromUrl() || initFiles
+  )
   const [selectedFileName, setSelectedFileName] =
     useState('App.tsx')
   const [theme, setTheme] = useState<
@@ -65,6 +83,11 @@ export default function PlaygroundProvider(
   useEffect(() => {
     document.documentElement.dataset.theme = theme
   }, [theme])
+
+  useEffect(() => {
+    const hash = compress(JSON.stringify(files))
+    window.location.hash = hash
+  }, [files])
 
   return (
     <PlaygroundContext.Provider
